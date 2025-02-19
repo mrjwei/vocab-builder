@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String
+  createdAt DateTime @default(now())
+  decks Deck[]
+}
+
+model Deck {
+  id Int @id @default(autoincrement())
+  name String
+  terms Term[]
+  createdAt DateTime @default(now())
+  categoryId Int
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+
+model Term {
+  id Int @id @default(autoincrement())
+  text String
+  definitions Definition[]
+  examples Example[]
+  status Status @default(LEARNING)
+  createdAt DateTime @default(now())
+  deckId Int
+  deck Deck @relation(fields: [deckId], references: [id], onDelete: Cascade)
+}
+
+model Definition {
+  id Int @id @default(autoincrement())
+  text String
+  termId Int
+  term Term @relation(fields: [termId], references: [id], onDelete: Cascade)
+}
+
+model Example {
+  id Int @id @default(autoincrement())
+  text String
+  termId Int
+  term Term @relation(fields: [termId], references: [id], onDelete: Cascade)
+}
+
+enum Status {
+  MASTERED
+  LEARNING
+  DIFFICULT
+}
+
+
+
