@@ -8,13 +8,16 @@ export default async function Home() {
   return (
     <>
       {categories.map(
-        (category: { name: string; decks: { name: string }[] }) => {
+        (category: { name: string; decks: { id: number; name: string }[] }) => {
           return (
             <div key={category.name}>
               <p>{category.name}</p>
               {category.decks.map((deck) => {
                 return (
-                  <Link href={`/deck/${slug(deck.name)}`} key={deck.name}>
+                  <Link
+                    href={`/deck/${deck.id}/${slug(deck.name)}`}
+                    key={deck.id}
+                  >
                     {deck.name}
                   </Link>
                 )
