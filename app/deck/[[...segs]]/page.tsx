@@ -5,7 +5,7 @@ export default async function DeckPage({
 }: {
   params: { segs: [number, string] }
 }) {
-  const [id, slug] = params.segs
+  const [id, slug] = (await params).segs
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
   const res = await fetch(`${baseUrl}/api/decks/${id}`)
   const deck = await res.json()

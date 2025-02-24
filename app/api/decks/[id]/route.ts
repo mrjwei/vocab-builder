@@ -10,7 +10,7 @@ export const GET = async (
       terms: true,
     },
     where: {
-      id: Number(params.id),
+      id: Number((await params).id),
     },
   })
   return NextResponse.json(deck)
