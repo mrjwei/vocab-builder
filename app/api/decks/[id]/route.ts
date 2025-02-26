@@ -7,7 +7,12 @@ export const GET = async (
 ) => {
   const deck = await prisma.deck.findUnique({
     include: {
-      terms: true,
+      terms: {
+        include: {
+          definitions: true,
+          examples: true,
+        },
+      },
     },
     where: {
       id: Number((await params).id),
