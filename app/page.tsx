@@ -3,8 +3,11 @@ import slug from "slug"
 
 export default async function Home() {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
-  const res = await fetch(`${baseUrl}/api/categories`)
-  const categories = await res.json()
+  const [categories, decks] = await Promise.all([
+    fetch(`${baseUrl}/api/categories`).then((res) => res.json()),
+    fetch(`${baseUrl}/api/decks`).then((res) => res.json()),
+  ])
+
   return (
     <>
       {categories.map(
@@ -15,7 +18,7 @@ export default async function Home() {
               {category.decks.map((deck) => {
                 return (
                   <Link
-                    href={`/deck/${deck.id}/${slug(deck.name)}`}
+                    href={`/decks/${deck.id}/${slug(deck.name)}`}
                     key={deck.id}
                   >
                     {deck.name}
@@ -26,6 +29,16 @@ export default async function Home() {
           )
         }
       )}
+      <div>
+        <p>Decks</p>
+        {decks.map((deck: { id: number; name: string }) => {
+          return (
+            <Link href={`/decks/${deck.id}/${slug(deck.name)}`} key={deck.id}>
+              {deck.name}
+            </Link>
+          )
+        })}
+      </div>
     </>
   )
 }

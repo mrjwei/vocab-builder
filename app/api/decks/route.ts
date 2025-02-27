@@ -1,8 +1,7 @@
-import {NextResponse} from 'next/server';
-import prisma from '@/lib/prisma';
+import { NextResponse } from "next/server"
+import prisma from "@/lib/prisma"
 
 export const GET = async () => {
-  const decks = await prisma.category.findMany()
+  const decks = await prisma.deck.findMany()
   return NextResponse.json(decks)
 }
-
