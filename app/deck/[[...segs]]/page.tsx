@@ -18,7 +18,7 @@ export default async function DeckPage({
           const { id } = term
           return (
             <li key={id}>
-              <Accordion term={term} />
+              <Accordion term={term} deckId={deck.id} slug={slug} />
             </li>
           )
         })}
