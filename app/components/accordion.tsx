@@ -3,7 +3,8 @@
 import React from "react"
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
 import { Definition, Term } from "@prisma/client"
-import { UpdateTermForm } from "./update-term-form"
+import { UpdateTermForm } from "@/app/components/update-term-form"
+import { deleteTerm } from "@/app/actions"
 
 export const Accordion = ({
   term,
@@ -17,6 +18,7 @@ export const Accordion = ({
   const [isOpen, setIsOpen] = React.useState(false)
   const [isEditing, setIsEditing] = React.useState(false)
   const { text, definitions, examples } = term
+  const deleteTermWithData = deleteTerm.bind(null, term.id, deckId, slug)
   return isEditing ? (
     <UpdateTermForm
       term={term}
@@ -40,9 +42,14 @@ export const Accordion = ({
           <span>{text}</span>
         </button>
         {!isEditing && (
-          <button type="button" onClick={() => setIsEditing(true)}>
-            Edit
-          </button>
+          <div className="flex">
+            <button type="button" onClick={() => setIsEditing(true)}>
+              Edit
+            </button>
+            <form action={deleteTermWithData}>
+              <button type="submit">Delete</button>
+            </form>
+          </div>
         )}
       </div>
       {isOpen && (

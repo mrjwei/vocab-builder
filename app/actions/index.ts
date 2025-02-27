@@ -49,3 +49,16 @@ export const updateTerm = async (
   await createTerm(deckId, slug, formData)
   revalidatePath(`/decks/${deckId}/${slug}`)
 }
+
+export const deleteTerm = async (
+  termId: number,
+  deckId: number,
+  slug: string
+) => {
+  await prisma.term.delete({
+    where: {
+      id: termId,
+    },
+  })
+  revalidatePath(`/decks/${deckId}/${slug}`)
+}
