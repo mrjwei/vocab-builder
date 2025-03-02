@@ -1,6 +1,7 @@
 import { Term } from "@prisma/client"
-import { NewTermForm } from "@/app/components/new-term-form"
+import { CreateNewTermUnit } from "@/app/components/create-new-term-unit"
 import { Accordion } from "@/app/components/accordion"
+import { ibm } from "@/lib/fonts"
 
 export default async function DeckPage({
   params,
@@ -14,7 +15,7 @@ export default async function DeckPage({
   const deckName = deck.name.charAt(0).toUpperCase() + deck.name.substring(1)
   return (
     <div>
-      <h2>{deckName}</h2>
+      <h2 className={`text-2xl font-bold mb-4 ${ibm.className}`}>{deckName}</h2>
       <ul>
         {deck.terms.map((term: Term) => {
           const { id } = term
@@ -25,7 +26,7 @@ export default async function DeckPage({
           )
         })}
       </ul>
-      <NewTermForm deckId={Number(id)} slug={slug} />
+      <CreateNewTermUnit deckId={Number(id)} slug={slug} />
     </div>
   )
 }

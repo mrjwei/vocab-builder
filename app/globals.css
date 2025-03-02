@@ -7,6 +7,15 @@
   --foreground: #171717;
 }
 
+@layer base {
+  label {
+    @apply block;
+  }
+  input {
+    @apply block w-full border-[1px] border-neutral-300 rounded py-1 px-2;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
