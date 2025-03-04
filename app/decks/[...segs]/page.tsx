@@ -2,6 +2,7 @@ import { Term } from "@prisma/client"
 import { CreateNewTermUnit } from "@/app/components/create-new-term-unit"
 import { Accordion } from "@/app/components/accordion"
 import { ibm } from "@/lib/fonts"
+import { deckById } from "@/lib/data"
 
 export default async function DeckPage({
   params,
@@ -9,12 +10,13 @@ export default async function DeckPage({
   params: { segs: [number, string] }
 }) {
   const [id, slug] = (await params).segs
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
-  const res = await fetch(`${baseUrl}/api/decks/${id}`)
-  const deck = await res.json()
+  const deck = await deckById(Number(id))
+  if (deck === null) {
+    return
+  }
   const deckName = deck.name.charAt(0).toUpperCase() + deck.name.substring(1)
   return (
-    <div>
+    <div className="container">
       <h2 className={`text-2xl font-bold mb-4 ${ibm.className}`}>{deckName}</h2>
       <ul>
         {deck.terms.map((term: Term) => {
