@@ -3,5 +3,7 @@ export default function DecksLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <main className="p-8 xl:max-w-[1200px] xl:mx-auto">{children}</main>
+  return (
+    <main className="h-full p-8 xl:max-w-[1200px] xl:mx-auto">{children}</main>
+  )
 }

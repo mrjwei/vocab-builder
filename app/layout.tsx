@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} antialiased text-neutral-800 bg-neutral-200/80`}
+        className={`${poppins.className} antialiased relative text-neutral-800 bg-neutral-200/80`}
       >
         <Header />
         {children}

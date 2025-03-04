@@ -4,6 +4,7 @@ import { Term } from "@prisma/client"
 import { capitalize } from "@/lib/utils"
 import { Card } from "@/app/components/card"
 import { StatusUnit } from "@/app/components/status-unit"
+import { CreateNewDeckUnit } from "@/app/components/create-new-deck-unit"
 import { ibm } from "@/lib/fonts"
 import { allDecks } from "@/lib/data"
 
@@ -56,6 +57,7 @@ export default async function Home() {
           })}
         </div>
       </div>
+      <CreateNewDeckUnit />
     </div>
   )
 }

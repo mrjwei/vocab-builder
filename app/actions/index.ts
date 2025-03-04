@@ -62,3 +62,14 @@ export const deleteTerm = async (
   })
   revalidatePath(`/decks/${deckId}/${slug}`)
 }
+
+export const createDeck = async (formData: FormData) => {
+  noStore()
+  const name = formData.get("deckName") as string
+  await prisma.deck.create({
+    data: {
+      name,
+    },
+  })
+  revalidatePath(`/decks`)
+}
