@@ -73,3 +73,29 @@ export const createDeck = async (formData: FormData) => {
   })
   revalidatePath(`/decks`)
 }
+
+export const updateDeck = async (deckId: number, formData: FormData) => {
+  noStore()
+  const name = formData.get("name") as string
+  await prisma.deck.update({
+    where: {
+      id: deckId,
+    },
+    data: {
+      name,
+    },
+  })
+  revalidatePath(`/decks`)
+  revalidatePath(`/`)
+}
+
+export const deleteDeck = async (deckId: number) => {
+  noStore()
+  await prisma.deck.delete({
+    where: {
+      id: deckId,
+    },
+  })
+  revalidatePath(`/decks`)
+  revalidatePath(`/`)
+}

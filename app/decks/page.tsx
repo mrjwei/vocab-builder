@@ -1,4 +1,3 @@
-import Link from "next/link"
 import slug from "slug"
 import { Term } from "@prisma/client"
 import { capitalize } from "@/lib/utils"
@@ -28,31 +27,29 @@ export default async function Home() {
               (t) => t.status === "MASTERED"
             ).length
             return (
-              <Link
+              <Card
                 key={deck.id}
+                title={capitalize(deck.name)}
+                deckId={deck.id}
                 href={`/decks/${deck.id}/${slug(deck.name)}`}
                 className="col-span-12 sm:col-span-6 lg:col-span-4"
               >
-                <Card title={capitalize(deck.name)}>
-                  <div>
-                    <StatusUnit
-                      status="DIFFICULT"
-                      numStatus={numDifficult}
-                      numTotal={numTerms}
-                    />
-                    <StatusUnit
-                      status="LEARNING"
-                      numStatus={numLearning}
-                      numTotal={numTerms}
-                    />
-                    <StatusUnit
-                      status="MASTERED"
-                      numStatus={numMastered}
-                      numTotal={numTerms}
-                    />
-                  </div>
-                </Card>
-              </Link>
+                <StatusUnit
+                  status="DIFFICULT"
+                  numStatus={numDifficult}
+                  numTotal={numTerms}
+                />
+                <StatusUnit
+                  status="LEARNING"
+                  numStatus={numLearning}
+                  numTotal={numTerms}
+                />
+                <StatusUnit
+                  status="MASTERED"
+                  numStatus={numMastered}
+                  numTotal={numTerms}
+                />
+              </Card>
             )
           })}
         </div>
