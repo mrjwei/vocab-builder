@@ -19,6 +19,8 @@ model Category {
   name String
   createdAt DateTime @default(now())
   decks Deck[]
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Deck {
@@ -27,6 +29,8 @@ model Deck {
   terms Term[]
   createdAt DateTime @default(now())
   categories Category[]
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Term {
@@ -38,6 +42,8 @@ model Term {
   createdAt DateTime @default(now())
   deckId Int
   deck Deck @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Definition {
@@ -52,6 +58,16 @@ model Example {
   text String
   termId Int
   term Term @relation(fields: [termId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String
+  createdAt DateTime @default(now())
+  categories Category[]
+  decks Deck[]
+  terms Term[]
 }
 
 enum Status {
