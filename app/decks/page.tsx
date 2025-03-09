@@ -7,7 +7,7 @@ import { CreateNewDeckUnit } from "@/app/components/create-new-deck-unit"
 import { ibm } from "@/lib/fonts"
 import { allDecks } from "@/lib/data"
 
-export default async function Home() {
+export default async function DecksPage() {
   const decks = await allDecks()
 
   return (
