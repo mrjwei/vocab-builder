@@ -5,7 +5,10 @@ import Link from "next/link"
 import clsx from "clsx"
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline"
 import { Button } from "@/app/components/button"
+import { PopupMenu } from "@/app/components/popup-menu"
+import { PopupMenuItem } from "@/app/components/popup-menu-item"
 import { updateDeck, deleteDeck } from "@/app/actions"
+import { usePopupMenu } from "@/app/hooks"
 
 export const Card = ({
   title,
@@ -20,22 +23,8 @@ export const Card = ({
   children: React.ReactNode
   className?: string
 }) => {
-  const [isMenuVisible, setIsMenuVisible] = React.useState(false)
   const [isEditing, setIsEditing] = React.useState(false)
-
-  const menuRef = React.useRef<HTMLUListElement>(null)
-
-  React.useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setIsMenuVisible(false)
-      }
-    }
-    if (isMenuVisible) {
-      document.addEventListener("mousedown", handleClickOutside)
-    }
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [isMenuVisible])
+  const { isMenuVisible, setIsMenuVisible, menuRef } = usePopupMenu()
 
   const handleClickEdit = () => {
     setIsEditing(true)
@@ -102,27 +91,18 @@ export const Card = ({
           </div>
         )}
         {isMenuVisible && (
-          <ul
-            ref={menuRef}
-            className="absolute top-full right-0 -translate-x-2 -translate-y-2 bg-white rounded shadow-card p-2"
-          >
-            <li>
-              <Button
-                type="button"
-                onClick={handleClickEdit}
-                className="w-full text-left hover:bg-neutral-100 transition-colors ease-in-out duration-300"
-              >
-                Edit
-              </Button>
-              <Button
-                type="button"
-                onClick={handleClickDelete}
-                className="w-full text-left hover:bg-neutral-100 transition-colors ease-in-out duration-300"
-              >
-                Delete
-              </Button>
-            </li>
-          </ul>
+          <PopupMenu ref={menuRef}>
+            <PopupMenuItem
+              label="Edit"
+              isLink={false}
+              onClick={handleClickEdit}
+            />
+            <PopupMenuItem
+              label="Delete"
+              isLink={false}
+              onClick={handleClickDelete}
+            />
+          </PopupMenu>
         )}
       </h3>
       <div className="px-6 py-4">{children}</div>
