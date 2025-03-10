@@ -6,16 +6,18 @@ import { NewTermForm } from "@/app/components/new-term-form"
 import { Button } from "@/app/components/button"
 
 type TProps = {
+  userId: number
   deckId: number
   slug: string
 }
 
-export const CreateNewTermUnit = ({ deckId, slug }: TProps) => {
+export const CreateNewTermUnit = ({ userId, deckId, slug }: TProps) => {
   const [isVisible, setIsVisible] = React.useState(false)
   return (
     <div>
       {isVisible ? (
         <NewTermForm
+          userId={userId}
           deckId={deckId}
           slug={slug}
           handleCancel={() => setIsVisible(false)}

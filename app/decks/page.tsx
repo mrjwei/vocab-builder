@@ -5,10 +5,12 @@ import { Card } from "@/app/components/card"
 import { StatusUnit } from "@/app/components/status-unit"
 import { CreateNewDeckUnit } from "@/app/components/create-new-deck-unit"
 import { ibm } from "@/lib/fonts"
-import { allDecks } from "@/lib/data"
+import { allDecks, userFromCookie } from "@/lib/data"
 
 export default async function DecksPage() {
-  const decks = await allDecks()
+  const user = await userFromCookie()
+
+  const decks = await allDecks(Number(user?.sub))
 
   return (
     <div className="container">

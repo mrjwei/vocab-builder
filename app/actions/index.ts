@@ -1,8 +1,11 @@
 "use server"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
+import bcrypt from "bcrypt"
 import prisma from "@/lib/prisma"
 
 export const createTerm = async (
+  userId: number,
   deckId: number,
   slug: string,
   formData: FormData
@@ -13,6 +16,7 @@ export const createTerm = async (
   const examples = formData.getAll("examples") as string[]
   await prisma.term.create({
     data: {
+      userId,
       text,
       definitions: {
         create: definitions.map((d) => ({
@@ -35,6 +39,7 @@ export const createTerm = async (
 }
 
 export const updateTerm = async (
+  userId: number,
   termId: number,
   deckId: number,
   slug: string,
@@ -46,7 +51,7 @@ export const updateTerm = async (
       id: termId,
     },
   })
-  await createTerm(deckId, slug, formData)
+  await createTerm(userId, deckId, slug, formData)
   revalidatePath(`/decks/${deckId}/${slug}`)
 }
 
@@ -63,11 +68,12 @@ export const deleteTerm = async (
   revalidatePath(`/decks/${deckId}/${slug}`)
 }
 
-export const createDeck = async (formData: FormData) => {
+export const createDeck = async (userId: number, formData: FormData) => {
   noStore()
   const name = formData.get("deckName") as string
   await prisma.deck.create({
     data: {
+      userId,
       name,
     },
   })
@@ -98,4 +104,19 @@ export const deleteDeck = async (deckId: number) => {
   })
   revalidatePath(`/decks`)
   revalidatePath(`/`)
+}
+
+export const createUser = async (formData: FormData) => {
+  noStore()
+  const username = formData.get("username") as string
+  const password = formData.get("password") as string
+  const hashedPassword = await bcrypt.hash(password, 10)
+  await prisma.user.create({
+    data: {
+      username,
+      password: hashedPassword,
+    },
+  })
+  revalidatePath(`/`)
+  redirect("/login")
 }

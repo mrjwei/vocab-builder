@@ -9,10 +9,12 @@ import { Button } from "@/app/components/button"
 import { ibm } from "@/lib/fonts"
 
 export const NewTermForm = ({
+  userId,
   deckId,
   slug,
   handleCancel,
 }: {
+  userId: number
   deckId: number
   slug: string
   handleCancel: () => void
@@ -60,7 +62,7 @@ export const NewTermForm = ({
     )
   }
 
-  const createTermWithDeckId = createTerm.bind(null, deckId, slug)
+  const createTermWithDeckId = createTerm.bind(null, userId, deckId, slug)
 
   return (
     <form

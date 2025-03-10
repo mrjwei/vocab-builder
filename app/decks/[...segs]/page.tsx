@@ -2,7 +2,7 @@ import { Term } from "@prisma/client"
 import { CreateNewTermUnit } from "@/app/components/create-new-term-unit"
 import { Accordion } from "@/app/components/accordion"
 import { ibm } from "@/lib/fonts"
-import { deckById } from "@/lib/data"
+import { deckById, userFromCookie } from "@/lib/data"
 
 export default async function DeckPage({
   params,
@@ -10,7 +10,9 @@ export default async function DeckPage({
   params: { segs: [number, string] }
 }) {
   const [id, slug] = (await params).segs
-  const deck = await deckById(Number(id))
+
+  const user = await userFromCookie()
+  const deck = await deckById(Number(user?.sub), Number(id))
   if (deck === null) {
     return
   }
@@ -28,7 +30,11 @@ export default async function DeckPage({
           )
         })}
       </ul>
-      <CreateNewTermUnit deckId={Number(id)} slug={slug} />
+      <CreateNewTermUnit
+        userId={Number(user?.sub)}
+        deckId={Number(id)}
+        slug={slug}
+      />
     </div>
   )
 }

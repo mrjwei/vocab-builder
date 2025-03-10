@@ -1,16 +1,12 @@
 "use client"
 import React from "react"
 import Link from "next/link"
-import {
-  UserCircleIcon as UserCircleOutlineIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-} from "@heroicons/react/24/outline"
-import { UserCircleIcon as UserCircleSolidIcon } from "@heroicons/react/24/solid"
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline"
 import { Button } from "@/app/components/button"
 import { PopupMenu } from "@/app/components/popup-menu"
 import { LogoutButton } from "@/app/components/logout-button"
 import { usePopupMenu } from "@/app/hooks"
+import clsx from "clsx"
 
 const navItems = [
   {
@@ -23,8 +19,9 @@ const navItems = [
   },
 ]
 
-export const Header = () => {
+export const Header = ({ username }: { username: string }) => {
   const { isMenuVisible, setIsMenuVisible, menuRef } = usePopupMenu()
+
   return (
     <header className="bg-neutral-800 text-white py-4 px-8">
       <div className="container flex items-center justify-between relative">
@@ -49,17 +46,22 @@ export const Header = () => {
             <li>
               <Button
                 type="button"
-                className="flex items-center gap-2 p-2 rounded hover:bg-neutral-600 transition-colors ease-in-out duration-300"
+                className={clsx(
+                  "flex items-center gap-2 p-2 rounded hover:bg-neutral-600 transition-colors ease-in-out duration-300 !font-normal",
+                  {
+                    "bg-neutral-600": isMenuVisible,
+                  }
+                )}
                 onClick={() => setIsMenuVisible(!isMenuVisible)}
               >
                 {isMenuVisible ? (
                   <>
-                    <UserCircleSolidIcon className="size-6" />
+                    <span>{username}</span>
                     <ChevronUpIcon className="size-4 translate-y-[1px]" />
                   </>
                 ) : (
                   <>
-                    <UserCircleOutlineIcon className="size-6" />
+                    <span>{username}</span>
                     <ChevronDownIcon className="size-4 translate-y-[1px]" />
                   </>
                 )}

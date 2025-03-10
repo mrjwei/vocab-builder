@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server"
 
 export const middleware = (req: NextRequest) => {
   const token = req.cookies.get("token")
-  if (!token && !req.url.includes("/login")) {
+  if (!token && !req.url.includes("/login") && !req.url.includes("/signup")) {
     return NextResponse.redirect(new URL("/login", req.url))
   }
   return NextResponse.next()
