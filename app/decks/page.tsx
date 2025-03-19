@@ -56,7 +56,7 @@ export default async function DecksPage() {
           })}
         </div>
       </div>
-      <CreateNewDeckUnit />
+      <CreateNewDeckUnit userId={Number(user?.sub)} />
     </div>
   )
 }

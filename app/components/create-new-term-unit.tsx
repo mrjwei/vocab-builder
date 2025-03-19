@@ -1,9 +1,8 @@
 "use client"
 
 import React from "react"
-import { PlusIcon } from "@heroicons/react/24/outline"
 import { NewTermForm } from "@/app/components/new-term-form"
-import { Button } from "@/app/components/button"
+import { NewItemButton } from "@/app/components/new-item-button"
 
 type TProps = {
   userId: number
@@ -23,14 +22,7 @@ export const CreateNewTermUnit = ({ userId, deckId, slug }: TProps) => {
           handleCancel={() => setIsVisible(false)}
         />
       ) : (
-        <Button
-          type="button"
-          className="flex items-center gap-2 px-0 mt-8 bg-neutral-800 text-white hover:bg-neutral-600 transition-colors ease-in-out duration-300 -translate-y-2"
-          onClick={() => setIsVisible(true)}
-        >
-          <PlusIcon className="size-4" />
-          <span>New Term</span>
-        </Button>
+        <NewItemButton label="New Term" onClick={() => setIsVisible(true)} />
       )}
     </div>
   )

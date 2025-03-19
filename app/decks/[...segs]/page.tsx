@@ -19,8 +19,8 @@ export default async function DeckPage({
   const deckName = deck.name.charAt(0).toUpperCase() + deck.name.substring(1)
   return (
     <div className="container">
-      <h2 className={`text-2xl font-bold mb-4 ${ibm.className}`}>{deckName}</h2>
-      <ul>
+      <h2 className={`text-2xl font-bold pt-8 ${ibm.className}`}>{deckName}</h2>
+      <ul className="py-8">
         {deck.terms.map((term: Term) => {
           const { id } = term
           return (
