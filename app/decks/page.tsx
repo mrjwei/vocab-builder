@@ -5,16 +5,27 @@ import { Card } from "@/app/components/card"
 import { StatusUnit } from "@/app/components/status-unit"
 import { CreateNewDeckUnit } from "@/app/components/create-new-deck-unit"
 import { ibm } from "@/lib/fonts"
-import { allDecks, userFromCookie } from "@/lib/data"
+import { allDecks, decksByCategory, userFromCookie } from "@/lib/data"
+import { Chip } from "@/app/components/chip"
 
-export default async function DecksPage() {
+export default async function DecksPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string }>
+}) {
+  const { category = "", color = "" } = await searchParams
+  const p = await searchParams
+  console.log(p)
   const user = await userFromCookie()
-
-  const decks = await allDecks(Number(user?.sub))
+  const decks =
+    category === ""
+      ? await allDecks(Number(user?.sub))
+      : await decksByCategory(Number(user?.sub), category)
 
   return (
     <div className="container">
       <h2 className={`text-2xl font-bold pt-8 ${ibm.className}`}>Decks</h2>
+      {category !== "" && <Chip label={category} color={color} />}
       <div className="py-8">
         <div className="grid grid-cols-12 gap-8">
           {decks.map((deck: { id: number; name: string; terms: Term[] }) => {
@@ -34,7 +45,7 @@ export default async function DecksPage() {
                 title={capitalize(deck.name)}
                 deckId={deck.id}
                 href={`/decks/${deck.id}/${slug(deck.name)}`}
-                className="col-span-12 sm:col-span-6 lg:col-span-4"
+                className="col-span-12 lg:col-span-4 sm:col-span-6"
               >
                 <StatusUnit
                   status="DIFFICULT"

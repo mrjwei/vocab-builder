@@ -17,6 +17,7 @@ datasource db {
 model Category {
   id Int @id @default(autoincrement())
   name String
+  color String @default("#000000")
   createdAt DateTime @default(now())
   decks Deck[]
   userId Int

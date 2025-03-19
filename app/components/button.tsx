@@ -8,7 +8,7 @@ type TProps = {
   id?: string
   onClick?: ((e: React.MouseEvent<HTMLButtonElement>) => void) | (() => void)
   children: React.ReactNode
-}
+} & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 export const Button = ({
   type,
@@ -17,6 +17,7 @@ export const Button = ({
   id,
   onClick,
   children,
+  ...props
 }: TProps) => {
   return (
     <button
@@ -31,6 +32,7 @@ export const Button = ({
       )}
       id={id}
       onClick={onClick}
+      {...props}
     >
       {children}
     </button>

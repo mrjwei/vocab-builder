@@ -30,6 +30,24 @@ export const allDecks = async (userId: number) => {
   return decks
 }
 
+export const decksByCategory = async (userId: number, categoryName: string) => {
+  const decks = await prisma.deck.findMany({
+    where: {
+      userId,
+      categories: {
+        some: {
+          name: categoryName,
+        },
+      },
+    },
+    include: {
+      terms: true,
+      categories: true,
+    },
+  })
+  return decks
+}
+
 export const deckById = async (userId: number, deckId: number) => {
   const deck = await prisma.deck.findUnique({
     include: {
@@ -39,6 +57,7 @@ export const deckById = async (userId: number, deckId: number) => {
           examples: true,
         },
       },
+      categories: true,
     },
     where: {
       userId,

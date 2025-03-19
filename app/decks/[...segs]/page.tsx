@@ -1,7 +1,7 @@
 import { Term } from "@prisma/client"
+import { DeckPageHeadingUnit } from "@/app/components/deck-page-heading-unit"
 import { CreateNewTermUnit } from "@/app/components/create-new-term-unit"
 import { Accordion } from "@/app/components/accordion"
-import { ibm } from "@/lib/fonts"
 import { deckById, userFromCookie } from "@/lib/data"
 
 export default async function DeckPage({
@@ -16,10 +16,10 @@ export default async function DeckPage({
   if (deck === null) {
     return
   }
-  const deckName = deck.name.charAt(0).toUpperCase() + deck.name.substring(1)
+
   return (
     <div className="container">
-      <h2 className={`text-2xl font-bold pt-8 ${ibm.className}`}>{deckName}</h2>
+      <DeckPageHeadingUnit deck={deck} />
       <ul className="py-8">
         {deck.terms.map((term: Term) => {
           const { id } = term
