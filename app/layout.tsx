@@ -11,11 +11,12 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
+  className?: string
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full">
       <body
-        className={`${poppins.className} antialiased relative text-neutral-800 bg-neutral-200/80`}
+        className={`${poppins.className} antialiased relative text-neutral-800  h-full`}
       >
         {children}
       </body>

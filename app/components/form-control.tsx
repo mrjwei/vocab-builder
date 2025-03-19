@@ -32,7 +32,7 @@ export const FormControl = (props: TProps) => {
       {hasBtn ? (
         <>
           <div className="flex items-center justify-between gap-2 mb-2">
-            <label htmlFor={htmlFor} className="font-bold text-neutral-600">
+            <label htmlFor={htmlFor} className="font-medium text-neutral-600">
               {labelText}
             </label>
             <Button
@@ -55,7 +55,10 @@ export const FormControl = (props: TProps) => {
         </>
       ) : (
         <>
-          <label htmlFor={htmlFor} className="font-bold text-neutral-600 mb-2">
+          <label
+            htmlFor={htmlFor}
+            className="font-medium text-neutral-600 mb-2"
+          >
             {labelText}
           </label>
           <input

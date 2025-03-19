@@ -1,38 +1,45 @@
 "use client"
 import React from "react"
+import Link from "next/link"
 import { FormControl } from "@/app/components/form-control"
-import { Button } from "@/app/components/button"
-import {createUser} from '@/app/actions'
-// import {TState} from '@/app/types';
+import { AuthForm } from "@/app/components/auth-form"
+import { createUser } from "@/app/actions"
+
+const Footer = (
+  <div className="px-12 py-8 bg-neutral-100 rounded-b-lg">
+    <p className="text-center">
+      <span className="">Already have an account?&nbsp;&nbsp;</span>
+      <Link href="/login" className="font-semibold text-fuchsia-700">
+        Login
+      </Link>
+    </p>
+  </div>
+)
 
 export default function SignupPage() {
-  // const initState: TState = {message: null, error: null}
-  // const [state, formAction] = React.useActionState(createUser, initState)
-
   return (
-    <div>
-      <form action={createUser}>
-        <FormControl
-          htmlFor="username"
-          name="username"
-          labelText="Username"
-          type="text"
-          hasBtn={false}
-        />
-        <FormControl
-          htmlFor="password"
-          name="password"
-          labelText="Password"
-          type="password"
-          hasBtn={false}
-        />
-        <Button
-          type="submit"
-          className="bg-neutral-800 text-white hover:bg-neutral-600 transition-colors ease-in-out duration-300"
-        >
-          Sign Up
-        </Button>
-      </form>
-    </div>
+    <AuthForm
+      title="Sign Up"
+      btnLabel="Sign Up"
+      formAction={createUser}
+      hasFooter={true}
+      footer={Footer}
+    >
+      <FormControl
+        htmlFor="username"
+        name="username"
+        labelText="Username"
+        type="text"
+        hasBtn={false}
+        className="mb-4"
+      />
+      <FormControl
+        htmlFor="password"
+        name="password"
+        labelText="Password"
+        type="password"
+        hasBtn={false}
+      />
+    </AuthForm>
   )
 }

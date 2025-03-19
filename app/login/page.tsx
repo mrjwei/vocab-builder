@@ -1,8 +1,20 @@
 "use client"
 import React from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { FormControl } from "@/app/components/form-control"
-import { Button } from "@/app/components/button"
+import { AuthForm } from "@/app/components/auth-form"
+
+const Footer = (
+  <div className="px-12 py-8 bg-neutral-100 rounded-b-lg">
+    <p className="text-center">
+      <span className="">New to Vocab Builder?&nbsp;&nbsp;</span>
+      <Link href="/signup" className="font-semibold text-fuchsia-700">
+        Sign Up
+      </Link>
+    </p>
+  </div>
+)
 
 export default function LoginPage() {
   const router = useRouter()
@@ -28,30 +40,29 @@ export default function LoginPage() {
     }
   }
   return (
-    <div>
+    <AuthForm
+      title="Login to Your Account"
+      btnLabel="Login"
+      formAction={handleSubmit}
+      hasFooter={true}
+      footer={Footer}
+    >
       {error && <p className="text-red-600">{error}</p>}
-      <form action={handleSubmit}>
-        <FormControl
-          htmlFor="username"
-          name="username"
-          labelText="Username"
-          type="text"
-          hasBtn={false}
-        />
-        <FormControl
-          htmlFor="password"
-          name="password"
-          labelText="Password"
-          type="password"
-          hasBtn={false}
-        />
-        <Button
-          type="submit"
-          className="bg-neutral-800 text-white hover:bg-neutral-600 transition-colors ease-in-out duration-300"
-        >
-          Login
-        </Button>
-      </form>
-    </div>
+      <FormControl
+        htmlFor="username"
+        name="username"
+        labelText="Username"
+        type="text"
+        hasBtn={false}
+        className="mb-4"
+      />
+      <FormControl
+        htmlFor="password"
+        name="password"
+        labelText="Password"
+        type="password"
+        hasBtn={false}
+      />
+    </AuthForm>
   )
 }
